@@ -29,6 +29,9 @@ public class UserService {
     public List<NewUser> findByEmail(String email){
         return userRepo.findByEmail(email);
     }
+    public void remove(int id) {
+        userRepo.deleteById(id);
+    }
 //===============For Admins=================
     public void saveAdmin(Admin admin){
         adminRepo.save(admin);

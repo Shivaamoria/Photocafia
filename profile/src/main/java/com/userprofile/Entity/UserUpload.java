@@ -1,16 +1,19 @@
 package com.userprofile.Entity;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name="UserUpload")
 public class UserUpload {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
     public UserUpload() {
@@ -58,25 +61,14 @@ public class UserUpload {
         this.description = description;
     }
 
-    public String[] getTag() {
-        return tag;
-    }
 
-    public void setTag(String[] tag) {
-        this.tag = tag;
-    }
 
     String image_url;
+    @Column(name = "date")
     @Temporal(TemporalType.DATE)
-    @CreatedDate
-    Date date;
+    @CreationTimestamp
+    public Date date;
     String description;
-    String tag[];
-
-
-    public NewUser getUserId() {
-        return userId;
-    }
 
     @Override
     public String toString() {
@@ -86,20 +78,27 @@ public class UserUpload {
                 ", image_url='" + image_url + '\'' +
                 ", date=" + date +
                 ", description='" + description + '\'' +
-                ", tag=" + Arrays.toString(tag) +
                 ", userId=" + userId +
                 '}';
     }
 
-    public UserUpload(int id, String image_name, String image_url, Date date, String description, String[] tag, NewUser userId) {
+
+
+    public UserUpload(int id, String image_name, String image_url, Date date, String description, NewUser userId) {
         this.id = id;
         this.image_name = image_name;
         this.image_url = image_url;
         this.date = date;
         this.description = description;
-        this.tag = tag;
         this.userId = userId;
     }
+
+
+    public NewUser getUserId() {
+        return userId;
+    }
+
+
 
     public void setUserId(NewUser userId) {
         this.userId = userId;

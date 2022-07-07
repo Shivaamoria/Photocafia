@@ -1,14 +1,18 @@
 package com.userprofile.Entity;
 
 import net.bytebuddy.implementation.bind.MethodDelegationBinder;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="NewUser")
+@SQLDelete(sql="UPDATE new_user SET deleted=true WHERE id=?")
+@Where(clause="deleted= false")
 public class NewUser {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     String name;
 
@@ -52,7 +56,7 @@ public class NewUser {
         this.password = password;
     }
 
-    @Column(unique = true)
+//    @Column(unique = true)
     String email;
 
     public NewUser(int id, String name, String email, String gender, String profile_photo, String password) {
